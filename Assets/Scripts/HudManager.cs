@@ -36,13 +36,13 @@ public class HudManager : MonoBehaviour
 
     private void Update()
     {
-        Weapon activeWeapon = WeaponManager.Instance.weaponSlotActive.GetComponentInChildren<Weapon>();
+        Weapon activeWeapon = WeaponManager.Instance.weaponActiveSlot.GetComponentInChildren<Weapon>();
         Weapon unActiveWeapon = GetUnActiveWeaponSlot().GetComponentInChildren<Weapon>();
 
         if (activeWeapon)
         {
             magazineAmmoUI.text = $"{activeWeapon.bulletLeft / activeWeapon.bulletPerBurst}";
-            totalAmmoUI.text = $"{activeWeapon.magazineSize / activeWeapon.bulletPerBurst}";
+            totalAmmoUI.text = $"{WeaponManager.Instance.CheckAmmoLeftFor(activeWeapon.thisWeaponModel)}";
 
             Weapon.WeaponModel model = activeWeapon.thisWeaponModel;
             ammoTypeUI.sprite = GetAmmoSprite(model);
@@ -62,6 +62,16 @@ public class HudManager : MonoBehaviour
             ammoTypeUI.sprite = emptySlot;
             activeWeaponUI.sprite = emptySlot;
             unActiveWeaponUI.sprite = emptySlot;
+
+            if (WeaponManager.Instance.lethalCount <= 0)
+            {
+                lethalUI.sprite = emptySlot;
+            }
+
+            if (WeaponManager.Instance.tacticalCount <= 0)
+            {
+                tacticalUI.sprite = emptySlot;
+            }
         }
     }
 
@@ -70,7 +80,7 @@ public class HudManager : MonoBehaviour
     {
         foreach (GameObject weaponSlot in WeaponManager.Instance.weaponSlots)
         {
-            if (weaponSlot != WeaponManager.Instance.weaponSlotActive)
+            if (weaponSlot != WeaponManager.Instance.weaponActiveSlot)
             {
                 return weaponSlot;
             }
@@ -107,5 +117,26 @@ public class HudManager : MonoBehaviour
                 return null;
         }
     }
+
+    public void UpdateThrowablesUI()
+    {
+        lethalAmountUI.text = $"{WeaponManager.Instance.lethalCount}";
+        tacticalAmountUI.text = $"{WeaponManager.Instance.tacticalCount}";
+
+        switch (WeaponManager.Instance.equippedLethalType)
+        {
+            case Throwable.ThrowableType.Grenade:
+                lethalUI.sprite = IconManager.grenade;
+                break;
+        }
+
+        switch (WeaponManager.Instance.equippedTacticalType)
+        {
+            case Throwable.ThrowableType.Smoke_Grenade:
+                tacticalUI.sprite = IconManager.smokeGrenade;
+                break;
+        }
+    }
 }
+
 

@@ -1,12 +1,15 @@
+
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
 
-    public static InteractionManager Instance { get; private set; }
-
+    public static InteractionManager Instance { get; set; }
     public Weapon hoveredWeapon;
-
+    public AmmoBox hoveredAmmoBox;
+    public Throwable hoveredThrowable;
+    [SerializeField] private Transform player;
+    public float distanceToPickupItem = 5f;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,23 +22,30 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+    }
+
     private void Update()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit))
         {
-            GameObject objectWehit = hit.transform.gameObject;
+            GameObject objectWeHit = hit.transform.gameObject;
 
-            if (objectWehit.GetComponent<Weapon>() && objectWehit.GetComponent<Weapon>().isActiveWeapon == false)
+            if (objectWeHit.GetComponent<Weapon>() && objectWeHit.GetComponent<Weapon>().isActiveWeapon == false)
             {
-                hoveredWeapon = objectWehit.GetComponent<Weapon>();
+                hoveredWeapon = objectWeHit.GetComponent<Weapon>();
                 hoveredWeapon.GetComponent<Outline>().enabled = true;
 
-                if (Input.GetKeyDown(KeyCode.F))
+                float distancePlayerWithPickupItem = Vector3.Distance(player.position, hoveredWeapon.transform.position);
+                if (Input.GetKeyDown(KeyCode.F) && distancePlayerWithPickupItem < distanceToPickupItem)
                 {
-                    WeaponManager.Instance.PickupWeapon(objectWehit);
+                    WeaponManager.Instance.PickupWeapon(objectWeHit);
                     hoveredWeapon.GetComponent<Outline>().enabled = false;
                 }
             }
@@ -47,10 +57,51 @@ public class InteractionManager : MonoBehaviour
                 }
             }
 
-            //AmmoBox
+            //Ammo Box
+
+            if (objectWeHit.GetComponent<AmmoBox>())
+            {
+                hoveredAmmoBox = objectWeHit.GetComponent<AmmoBox>();
+                hoveredAmmoBox.GetComponent<Outline>().enabled = true;
+
+                float distancePlayerWithPickupItem = Vector3.Distance(player.position, hoveredAmmoBox.transform.position);
+                if (Input.GetKeyDown(KeyCode.F) && distancePlayerWithPickupItem < distanceToPickupItem)
+                {
+                    WeaponManager.Instance.PickupAmmo(hoveredAmmoBox);
+                    Destroy(objectWeHit.gameObject);
+                    hoveredWeapon.GetComponent<Outline>().enabled = false;
+                }
+            }
+            else
+            {
+                if (hoveredAmmoBox)
+                {
+                    hoveredAmmoBox.GetComponent<Outline>().enabled = false;
+                }
+            }
+
 
             //Throwable
 
+            if (objectWeHit.GetComponent<Throwable>())
+            {
+                hoveredThrowable = objectWeHit.GetComponent<Throwable>();
+                hoveredThrowable.GetComponent<Outline>().enabled = true;
+
+                float distancePlayerWithPickupItem = Vector3.Distance(player.position, hoveredThrowable.transform.position);
+                if (Input.GetKeyDown(KeyCode.F) && distancePlayerWithPickupItem < distanceToPickupItem)
+                {
+                    WeaponManager.Instance.PickupThrowable(hoveredThrowable);
+                    hoveredThrowable.GetComponent<Outline>().enabled = false;
+                }
+            }
+            else
+            {
+                if (hoveredThrowable)
+                {
+                    hoveredThrowable.GetComponent<Outline>().enabled = false;
+                }
+            }
         }
     }
 }

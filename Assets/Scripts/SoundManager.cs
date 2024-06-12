@@ -9,10 +9,17 @@ public class SoundManager : MonoBehaviour
     [Header("Shooting")]
     public AudioSource shootingChanel;
     public AudioClip shootingSound;
+    public AudioClip emptySound;
 
     [Header("Reload")]
     public AudioSource reloadChanel;
     public AudioClip reloadSound;
+
+    [Header("Throwable")]
+    public AudioSource throwableChanel;
+    public AudioClip grenadeSound;
+    public AudioClip smokeGrenadeSound;
+
 
 
     private void Awake()
@@ -26,4 +33,6 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         }
     }
+
+
 }

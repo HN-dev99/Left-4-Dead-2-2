@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float initialHeight;
     public float sitHeight = 0.5f;
     Vector3 velocity;
+
+    bool isMoving;
 
 
     private void Awake()
@@ -52,7 +55,10 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+
     }
+
 
     private void SitDown()
     {

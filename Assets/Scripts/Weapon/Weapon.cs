@@ -68,24 +68,39 @@ public class Weapon : MonoBehaviour
     {
         HandleInputShootingMode();
 
-        if (isActiveWeapon)
+        if (isActiveWeapon == true)
         {
+            gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
+
             if (isShooting && readyToShoot && bulletLeft > 0)
             {
                 Fire();
                 isShooting = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && bulletLeft < magazineSize && !isReloading && !isShooting)
+            if (isShooting && bulletLeft == 0)
+            {
+                SoundManager.Instance.shootingChanel.PlayOneShot(SoundManager.Instance.emptySound);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && bulletLeft < magazineSize && !isReloading && !isShooting && WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) > 0)
             {
                 Reload();
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+        }
+        else
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            foreach (Transform child in transform)
             {
-
+                child.gameObject.layer = LayerMask.NameToLayer("Default");
             }
-
         }
 
     }
@@ -100,7 +115,20 @@ public class Weapon : MonoBehaviour
 
     private void ReloadCompleted()
     {
-        bulletLeft = magazineSize;
+        if (WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) + bulletLeft > magazineSize)
+        {
+            int bulletToDecrease = magazineSize - bulletLeft;
+            bulletLeft = magazineSize;
+
+            WeaponManager.Instance.DecreaseTotalAmmo(bulletToDecrease, thisWeaponModel);
+        }
+        else
+        {
+            int bulletToDecrease = WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel);
+            bulletLeft += bulletToDecrease;
+
+            WeaponManager.Instance.DecreaseTotalAmmo(bulletToDecrease, thisWeaponModel);
+        }
         isReloading = false;
     }
 
@@ -124,6 +152,7 @@ public class Weapon : MonoBehaviour
         animator.SetTrigger("RECOIL");
 
         bulletLeft--;
+
 
         readyToShoot = false;
         Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
