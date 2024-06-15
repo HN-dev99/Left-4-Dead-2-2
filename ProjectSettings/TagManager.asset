@@ -7,6 +7,9 @@ TagManager:
   - Wall
   - Ground
   - FxTemporaire
+  - Enemy
+  - Waypoints
+  - ZombieHand
   layers:
   - Default
   - TransparentFX

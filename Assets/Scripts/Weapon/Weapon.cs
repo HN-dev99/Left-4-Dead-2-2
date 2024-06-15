@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 {
 
     public bool isActiveWeapon;
+    public int weaponDamage = 20;
 
     public Animator animator;
 
@@ -153,14 +154,18 @@ public class Weapon : MonoBehaviour
 
         bulletLeft--;
 
-
         readyToShoot = false;
         Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
 
-        bullet.transform.forward = shootingDirection;
+        //Bullet Damage
+        Bullets bul = bullet.GetComponent<Bullets>();
+        bul.bulletDamage = weaponDamage;
 
+
+        //Bullet Move
+        bullet.transform.forward = shootingDirection;
         bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletSpeed, ForceMode.Impulse);
 
         StartCoroutine(DestroyBulletAfterLifeTime(bullet, bulletLifeTime));

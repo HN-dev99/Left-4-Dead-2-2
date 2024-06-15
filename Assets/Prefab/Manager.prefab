@@ -591,6 +591,8 @@ MonoBehaviour:
     type: 3}
   grenadeExplosionEffect: {fileID: 794741191043767049, guid: 02dcd2a60c8b3f5488db27f092f0ea8d,
     type: 3}
+  bloodSprayEffect: {fileID: 1603752403263269934, guid: 5721e9a735f58bf43ad4eba43fb43405,
+    type: 3}
 --- !u!1 &7763979643709276053
 GameObject:
   m_ObjectHideFlags: 0
