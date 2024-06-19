@@ -9,21 +9,25 @@ public class Enemy : MonoBehaviour
     public bool isDead;
     public Animator animator;
 
+
     private void Start()
     {
         animator = GetComponent<Animator>();
+
     }
 
     public void TakeDamage(int damage)
     {
+        if (isDead == true) return;
         HP -= damage;
         if (HP > 0)
         {
-            isDead = false;
             animator.SetTrigger("DAMAGE");
+            SoundManager.Instance.zombieChanel.PlayOneShot(SoundManager.Instance.zombieHurt);
         }
         else
         {
+
             int randomValue = Random.Range(0, 1);
             if (randomValue == 0)
             {
@@ -35,6 +39,7 @@ public class Enemy : MonoBehaviour
             }
             isDead = true;
 
+            SoundManager.Instance.zombieChanel1.PlayOneShot(SoundManager.Instance.zombieDeath);
         }
         Debug.Log(HP);
     }

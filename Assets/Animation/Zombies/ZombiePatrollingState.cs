@@ -31,7 +31,15 @@ public class ZombiePatrollingState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (navAgent.remainingDistance <= navAgent.stoppingDistance)
+        // Patrolling Sound
+        if (SoundManager.Instance.zombieChanel.isPlaying == false)
+        {
+            SoundManager.Instance.zombieChanel.PlayOneShot(SoundManager.Instance.zombieWalking);
+            SoundManager.Instance.zombieChanel.PlayDelayed(1f);
+        }
+
+
+        if (navAgent.remainingDistance <= navAgent.stoppingDistance && navAgent.enabled == true)
         {
             navAgent.SetDestination(waypointsList[Random.Range(0, waypointsList.Count)].position);
         }

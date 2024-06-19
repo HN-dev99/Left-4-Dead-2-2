@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GlobalReference : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GlobalReference : MonoBehaviour
     public GameObject grenadeExplosionEffect;
 
     public GameObject bloodSprayEffect;
+
+
 
     private void Awake()
     {

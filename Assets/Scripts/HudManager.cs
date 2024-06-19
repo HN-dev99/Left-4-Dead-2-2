@@ -21,6 +21,9 @@ public class HudManager : MonoBehaviour
 
     public Sprite emptySlot;
 
+    public Slider healthSlider;
+    public PlayerHealth playerHealth;
+
     public static HudManager Instance { get; private set; }
     private void Awake()
     {
@@ -32,6 +35,11 @@ public class HudManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    private void Start()
+    {
+        healthSlider.maxValue = playerHealth.GetComponent<PlayerHealth>().HP;
     }
 
     private void Update()
@@ -73,6 +81,9 @@ public class HudManager : MonoBehaviour
                 tacticalUI.sprite = emptySlot;
             }
         }
+
+        // Health Slider Player
+        healthSlider.value = playerHealth.GetComponent<PlayerHealth>().HP;
     }
 
 

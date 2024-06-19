@@ -20,6 +20,22 @@ public class SoundManager : MonoBehaviour
     public AudioClip grenadeSound;
     public AudioClip smokeGrenadeSound;
 
+    [Header("Zombie")]
+    public AudioSource zombieChanel;
+
+    public AudioClip zombieWalking;
+    public AudioClip zombieChase;
+    public AudioClip zombieAttack;
+    public AudioClip zombieHurt;
+
+    public AudioSource zombieChanel1;
+    public AudioClip zombieDeath;
+
+    [Header("Player")]
+    public AudioSource playerChanel;
+    public AudioClip playerHurt;
+    public AudioClip playerDeath;
+    public AudioClip gameOverMusic;
 
 
     private void Awake()

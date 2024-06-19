@@ -79,7 +79,7 @@ public class InteractionManager : MonoBehaviour
                 {
                     WeaponManager.Instance.PickupAmmo(hoveredAmmoBox);
                     Destroy(objectWeHit.gameObject);
-                    hoveredWeapon.GetComponent<Outline>().enabled = false;
+                    hoveredAmmoBox.GetComponent<Outline>().enabled = false;
                 }
             }
             else

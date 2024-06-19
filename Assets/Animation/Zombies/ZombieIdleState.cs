@@ -3,9 +3,10 @@ using UnityEngine;
 public class ZombieIdleState : StateMachineBehaviour
 {
     float timer;
-    public float idleTime = 4f;
+    public float idleTime = 2f;
 
     Transform player;
+    Enemy zombie;
     public float detectionAreaRadius = 18f;
 
 
