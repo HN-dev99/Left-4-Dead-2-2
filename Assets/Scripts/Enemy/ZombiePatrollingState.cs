@@ -31,7 +31,6 @@ public class ZombiePatrollingState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Patrolling Sound
         if (SoundManager.Instance.zombieChanel.isPlaying == false)
         {
             SoundManager.Instance.zombieChanel.PlayOneShot(SoundManager.Instance.zombieWalking);
@@ -55,12 +54,6 @@ public class ZombiePatrollingState : StateMachineBehaviour
             animator.SetBool("isChasing", true);
         }
     }
-
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-
 
 }
 

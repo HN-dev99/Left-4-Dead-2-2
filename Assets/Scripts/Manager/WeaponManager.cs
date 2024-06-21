@@ -151,11 +151,6 @@ public class WeaponManager : MonoBehaviour
                 print("Tactical limit reached");
             }
         }
-        else
-        {
-            //Cannot pickup different lethal
-            //Option to Swap lethals
-        }
     }
 
     private void PickUpThrowableAsLethal(Throwable.ThrowableType lethal)
@@ -175,20 +170,8 @@ public class WeaponManager : MonoBehaviour
                 print("Lethals limit reached");
             }
         }
-        else
-        {
-            //Cannot pickup different lethal
-            //Option to Swap lethals
-        }
-
     }
 
-
-    // private void PickupGrenade()
-    // {
-    //     grenades += 1;
-    //     HUDManager.Instance.UpdateThrowablesUI();
-    // }
 
     private void ThrowLethal()
     {
@@ -248,6 +231,7 @@ public class WeaponManager : MonoBehaviour
     }
     #endregion
 
+    // Weapon
     private void AddWeaponIntoActiveSlot(GameObject pickedupWeapon)
     {
         pickedupWeapon.transform.SetParent(weaponActiveSlot.transform, false);

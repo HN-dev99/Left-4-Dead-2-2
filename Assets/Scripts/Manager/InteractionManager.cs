@@ -24,7 +24,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
