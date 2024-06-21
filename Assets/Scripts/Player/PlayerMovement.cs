@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
     public float sitHeight = 0.5f;
     Vector3 velocity;
 
-    bool isMoving;
-
 
     private void Awake()
     {
@@ -47,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         move.y = 0;
         controller.Move(move * playerSpeed * Time.deltaTime);
 
-
+        //Jump 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             velocity.y = Mathf.Sqrt(-2f * gravity * jumpHeight);
