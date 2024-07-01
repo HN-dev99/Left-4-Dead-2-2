@@ -12,7 +12,7 @@ public class ZombiePatrollingState : StateMachineBehaviour
     Transform player;
     NavMeshAgent navAgent;
     List<Transform> waypointsList = new List<Transform>();
-    Enemy zombie;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;

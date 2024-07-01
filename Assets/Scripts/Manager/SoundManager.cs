@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+
 
     [Header("Shooting")]
     public AudioSource shootingChanel;
@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip playerDeath;
     public AudioClip gameOverMusic;
 
-
+    public static SoundManager Instance { get; private set; }
     private void Awake()
     {
         if (Instance != this && Instance != null)

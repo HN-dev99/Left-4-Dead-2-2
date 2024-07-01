@@ -4,34 +4,35 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public static WeaponManager Instance { get; set; }
+
     public List<GameObject> weaponSlots;
     public GameObject weaponActiveSlot;
 
     [Header("Ammo")]
-    public int totalGreenAmmo = 0;
-    public int totalRedAmmo = 0;
+    [SerializeField] private int totalGreenAmmo = 0;
+    [SerializeField] private int totalRedAmmo = 0;
 
     [Header("Throwable")]
 
-    public float throwForce = 40f;
+    [SerializeField] private float throwForce = 40f;
 
     public GameObject throwableSpawn;
-    public float forceMutiplier = 0f;
-    public float forceMutiplierLimit = 2f;
+    [SerializeField] private float forceMutiplier = 0f;
+    [SerializeField] private float forceMutiplierLimit = 2f;
 
     [Header("Lethals")]
-    public int maxLethal = 2;
+    [SerializeField] private int maxLethal = 2;
     public int lethalCount = 0;
     public Throwable.ThrowableType equippedLethalType;
     public GameObject grenadePrefab;
 
     [Header("Tactical")]
-    public int maxTactical = 2;
+    [SerializeField] private int maxTactical = 2;
     public int tacticalCount = 0;
     public Throwable.ThrowableType equippedTacticalType;
     public GameObject smokeGrenadePrefab;
 
+    public static WeaponManager Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null && Instance != this)

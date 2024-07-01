@@ -8088,10 +8088,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePool: {fileID: 1104906378}
-  delayTime: 5
   initialZombiesPerWave: 5
   currentZombiePerWave: 0
+  zombiesToAddAfterPerWave: 5
   spawnDelay: 0.5
+  delayTime: 5
   currentWave: 0
   waveCooldown: 5
   inCooldown: 0
@@ -13937,13 +13938,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5586402777479238636}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0408703, y: 0.89451206, z: 0.08361126, w: 0.43724945}
+  m_LocalRotation: {x: -0.023519414, y: 0.8971218, z: 0.048115324, w: 0.4385251}
   m_LocalPosition: {x: 15.09, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -10.68, y: 127.9, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.14, y: 127.9, z: 0}
 --- !u!1001 &8338760106990379312
 PrefabInstance:
   m_ObjectHideFlags: 0

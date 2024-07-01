@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IconManager : MonoBehaviour
 {
-    public static IconManager Instance { get; set; }
+    public static IconManager Instance { get; private set; }
 
     public static Sprite Green_Weapon;
     public static Sprite Red_Weapon;

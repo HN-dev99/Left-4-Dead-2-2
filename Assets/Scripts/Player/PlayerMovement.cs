@@ -27,11 +27,6 @@ public class PlayerMovement : MonoBehaviour
     {
         groundedPlayer = controller.isGrounded;
 
-        if (groundedPlayer && velocity.y < 0)
-        {
-            velocity.y = -5f;
-        }
-
         SitDown();
         StandUp();
 
@@ -56,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
 
     private void SitDown()
     {

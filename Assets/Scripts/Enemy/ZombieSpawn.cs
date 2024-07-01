@@ -5,20 +5,26 @@ using UnityEngine;
 
 public class ZombieSpawn : MonoBehaviour
 {
+    [Header("Zombie Pool")]
     public ObjectPool zombiePool;
-    public float delayTime = 5f;
-    public int initialZombiesPerWave = 5;
-    public int currentZombiePerWave;
 
-    public float spawnDelay = 0.5f;
+    [Header("Wave Settings")]
+    [SerializeField] private int initialZombiesPerWave = 5;
+    [SerializeField] private int currentZombiePerWave;
+    [SerializeField] private int zombiesToAddAfterPerWave;
+    [SerializeField] private int currentWave = 0;
+    [SerializeField] private List<Enemy> currentZombieAlive;
 
-    public int currentWave = 0;
-    public float waveCooldown = 20f;
+    [Header("Spawn Settings")]
+    [SerializeField] private float spawnDelay = 0.5f;
+    [SerializeField] private float delayTime = 5f;
+    [SerializeField] private float xSpreadIntensity = 15f;
+    [SerializeField] private float zSpreadIntensity = 1f;
 
-    public bool inCooldown;
-    public float cooldownCounter = 0; // use this for testing and the UI;
-
-    public List<Enemy> currentZombieAlive;
+    [Header("Cooldown Settings")]
+    [SerializeField] private float waveCooldown = 20f;
+    [SerializeField] private bool inCooldown;
+    [SerializeField] private float cooldownCounter = 0; // use this for testing and the UI;
 
     private void Start()
     {
@@ -40,7 +46,7 @@ public class ZombieSpawn : MonoBehaviour
         for (int i = 0; i < currentZombiePerWave; i++)
         {
             // Generate a random offset within a specified range
-            Vector3 spawnOffset = new Vector3(UnityEngine.Random.Range(-15f, 15f), 0f, UnityEngine.Random.Range(-1f, 1f));
+            Vector3 spawnOffset = new Vector3(UnityEngine.Random.Range(-xSpreadIntensity, xSpreadIntensity), 0f, UnityEngine.Random.Range(-zSpreadIntensity, zSpreadIntensity));
             Vector3 spawnPosition = transform.position + spawnOffset;
 
             if (zombiePool != null)
@@ -113,7 +119,7 @@ public class ZombieSpawn : MonoBehaviour
 
         inCooldown = false;
 
-        currentZombiePerWave += 5;
+        currentZombiePerWave += zombiesToAddAfterPerWave;
         StartNextWave();
     }
 }

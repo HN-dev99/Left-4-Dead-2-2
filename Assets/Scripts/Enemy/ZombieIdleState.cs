@@ -14,7 +14,6 @@ public class ZombieIdleState : StateMachineBehaviour
     {
         timer = 0;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

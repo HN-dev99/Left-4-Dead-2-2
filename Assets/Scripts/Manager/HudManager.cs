@@ -86,7 +86,6 @@ public class HudManager : MonoBehaviour
         healthSlider.value = playerHealth.GetComponent<PlayerHealth>().HP;
     }
 
-
     private GameObject GetUnActiveWeaponSlot()
     {
         foreach (GameObject weaponSlot in WeaponManager.Instance.weaponSlots)
