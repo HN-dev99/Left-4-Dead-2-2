@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-
+    // public GameObject bulletPrefab;
+    public ObjectPool bulletPool;
     public bool isActiveWeapon;
     public int weaponDamage = 20;
 
     public Animator animator;
 
     [Header("Bullet")]
-    public GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed = 500f;
     [SerializeField] private float bulletLifeTime = 3f;
     [SerializeField] private float shootingDelay = 2f;
@@ -78,7 +78,7 @@ public class Weapon : MonoBehaviour
                 child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
             }
 
-            if (isShooting && readyToShoot && bulletLeft > 0)
+            if (isShooting && readyToShoot && bulletLeft > 0 && !isReloading)
             {
                 Fire();
                 isShooting = false;
@@ -155,20 +155,22 @@ public class Weapon : MonoBehaviour
         bulletLeft--;
 
         readyToShoot = false;
+
+        // GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+        GameObject bullet = bulletPool.GetBulletFromPool(bulletSpawn.position, Quaternion.identity);
         Vector3 shootingDirection = CaculateDirectionAndSpread().normalized;
-
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-
-        //Bullet Damage
-        Bullets bul = bullet.GetComponent<Bullets>();
-        bul.bulletDamage = weaponDamage;
-
 
         //Bullet Move
         bullet.transform.forward = shootingDirection;
         bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletSpeed, ForceMode.Impulse);
 
-        StartCoroutine(DestroyBulletAfterLifeTime(bullet, bulletLifeTime));
+        StartCoroutine(UnSetActiveBulletAfterLifeTime(bullet, bulletLifeTime));
+
+
+
+        //Bullet Damage
+        Bullets bul = bullet.GetComponent<Bullets>();
+        bul.bulletDamage = weaponDamage;
 
         if (currentShootingMode == ShootingMode.Burst)
         {
@@ -194,10 +196,10 @@ public class Weapon : MonoBehaviour
         readyToShoot = true;
     }
 
-    private IEnumerator DestroyBulletAfterLifeTime(GameObject bullet, float delay)
+    private IEnumerator UnSetActiveBulletAfterLifeTime(GameObject bullet, float delay)
     {
         yield return new WaitForSeconds(delay);
-        Destroy(bullet);
+        bulletPool.ReturnBulletToPool(bullet);
     }
 
     private Vector3 CaculateDirectionAndSpread()

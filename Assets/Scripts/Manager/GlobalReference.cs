@@ -9,7 +9,6 @@ public class GlobalReference : MonoBehaviour
 
     public GameObject bulletEffectPrefab;
 
-
     public GameObject smokeGrenadeEffect;
     public GameObject grenadeExplosionEffect;
 

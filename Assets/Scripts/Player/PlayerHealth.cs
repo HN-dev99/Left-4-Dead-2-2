@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
 
-    public GameObject bloodyScreen;
     LevelManager levelManager;
+    [SerializeField] private GameObject bloodyScreen;
     public int HP = 100;
     public bool isDead;
 
     private void Start()
     {
-        levelManager = FindAnyObjectByType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     public void TakeDamage(int damage)

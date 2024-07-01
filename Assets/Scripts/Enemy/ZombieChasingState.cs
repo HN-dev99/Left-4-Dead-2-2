@@ -11,11 +11,13 @@ public class ZombieChasingState : StateMachineBehaviour
     public float stopChasingDistance = 21f;
     Transform player;
     NavMeshAgent navAgent;
+    Enemy zombie;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navAgent = animator.GetComponent<NavMeshAgent>();
         navAgent.speed = chaseSpeed;
+
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

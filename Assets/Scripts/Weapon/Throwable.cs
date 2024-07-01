@@ -5,8 +5,8 @@ public class Throwable : MonoBehaviour
 {
     [Header("Grenade")]
     [SerializeField] float delay = 3f;
-    [SerializeField] float damageRadius = 20f;
-    [SerializeField] float explosionForce = 1200f;
+    [SerializeField] float damageRadius = 10f;
+    [SerializeField] float explosionForce = 500f;
 
     float countdown;
     bool hasExploded = false;

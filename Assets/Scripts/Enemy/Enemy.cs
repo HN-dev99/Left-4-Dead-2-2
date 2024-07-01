@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-
+            isDead = true;
             int randomValue = Random.Range(0, 1);
             if (randomValue == 0)
             {
@@ -37,8 +37,6 @@ public class Enemy : MonoBehaviour
             {
                 animator.SetTrigger("DIE2");
             }
-            isDead = true;
-
             SoundManager.Instance.zombieChanel1.PlayOneShot(SoundManager.Instance.zombieDeath);
         }
         Debug.Log(HP);

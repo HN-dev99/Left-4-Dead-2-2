@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class ZombieSpawn : MonoBehaviour
 {
-    public GameObject zombiePrefab;
+    public ObjectPool zombiePool;
+    public float delayTime = 5f;
     public int initialZombiesPerWave = 5;
     public int currentZombiePerWave;
 
     public float spawnDelay = 0.5f;
 
     public int currentWave = 0;
-    public float waveCooldown = 10f;
+    public float waveCooldown = 20f;
 
     public bool inCooldown;
     public float cooldownCounter = 0; // use this for testing and the UI;
@@ -39,18 +40,22 @@ public class ZombieSpawn : MonoBehaviour
         for (int i = 0; i < currentZombiePerWave; i++)
         {
             // Generate a random offset within a specified range
-            Vector3 spawnOffset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
+            Vector3 spawnOffset = new Vector3(UnityEngine.Random.Range(-15f, 15f), 0f, UnityEngine.Random.Range(-1f, 1f));
             Vector3 spawnPosition = transform.position + spawnOffset;
 
-            // Instantiate the Zombie
-            var zombie = Instantiate(zombiePrefab, spawnPosition, Quaternion.identity);
+            if (zombiePool != null)
+            {
+                //Get Zombie From Pool
+                var zombie = zombiePool.GetBulletFromPool(spawnPosition, Quaternion.identity);
 
-            // Get Enemy Script
-            Enemy enemyScript = zombie.GetComponent<Enemy>();
+                // Get Enemy Script 
+                Enemy enemyScript = zombie.GetComponent<Enemy>();
+                enemyScript.isDead = false;
+                // Track this zombie
+                currentZombieAlive.Add(enemyScript);
+                yield return new WaitForSeconds(spawnDelay);
+            }
 
-            // Track this zombie
-            currentZombieAlive.Add(enemyScript);
-            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
@@ -62,20 +67,20 @@ public class ZombieSpawn : MonoBehaviour
         {
             if (zombie.isDead)
             {
+                Debug.Log($"Zombie {zombie.name} is dead. Starting coroutine to unset active.");
+                StartCoroutine(UnSetActiveZombieAfterDelay(delayTime, zombie));
                 zombiesToRemove.Add(zombie);
             }
         }
 
-        // Actually remove all dead zombies
         foreach (Enemy zombie in zombiesToRemove)
         {
             currentZombieAlive.Remove(zombie);
         }
-
         zombiesToRemove.Clear();
 
         // Start Cooldown if all zombies are dead
-        if (currentZombieAlive.Count == 0 && inCooldown == false)
+        if (!inCooldown && currentZombieAlive.Count == 0)
         {
             // Start cooldown for next wave
             StartCoroutine(WaveCooldown());
@@ -93,6 +98,13 @@ public class ZombieSpawn : MonoBehaviour
         }
     }
 
+    private IEnumerator UnSetActiveZombieAfterDelay(float delay, Enemy zombie)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log($"Zombie {zombie.name} is being returned to the pool.");
+        zombiePool.ReturnBulletToPool(zombie.gameObject);
+    }
+
     private IEnumerator WaveCooldown()
     {
         inCooldown = true;
@@ -101,7 +113,16 @@ public class ZombieSpawn : MonoBehaviour
 
         inCooldown = false;
 
-        currentZombiePerWave *= 2;
+        currentZombiePerWave += 5;
         StartNextWave();
     }
 }
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,7 @@ public class ZombiePatrollingState : StateMachineBehaviour
     Transform player;
     NavMeshAgent navAgent;
     List<Transform> waypointsList = new List<Transform>();
-
+    Enemy zombie;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -31,6 +31,7 @@ public class ZombiePatrollingState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         if (SoundManager.Instance.zombieChanel.isPlaying == false)
         {
             SoundManager.Instance.zombieChanel.PlayOneShot(SoundManager.Instance.zombieWalking);

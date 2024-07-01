@@ -2701,7 +2701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b8a86c470438e4587a8f02ab930d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  HP: 50
   zombieDamage: 25
   isDead: 0
   animator: {fileID: 0}

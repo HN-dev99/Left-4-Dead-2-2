@@ -6,7 +6,7 @@ public class ZombieIdleState : StateMachineBehaviour
     public float idleTime = 2f;
 
     Transform player;
-    Enemy zombie;
+
     public float detectionAreaRadius = 18f;
 
 
@@ -14,6 +14,7 @@ public class ZombieIdleState : StateMachineBehaviour
     {
         timer = 0;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -31,12 +32,6 @@ public class ZombieIdleState : StateMachineBehaviour
         {
             animator.SetBool("isChasing", true);
         }
-    }
-
-
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
     }
 
 

@@ -1,32 +1,36 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullets : MonoBehaviour
 {
 
     public int bulletDamage;
+    private ObjectPool bulletPool;
+
+    private void Start()
+    {
+        bulletPool = FindObjectOfType<ObjectPool>();
+    }
     private void OnCollisionEnter(Collision objectWeHit)
     {
-        if (objectWeHit.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log("Hit Wall");
-
-            CreateBulletEffect(objectWeHit);
-            Destroy(gameObject);
-        }
 
         if (objectWeHit.gameObject.CompareTag("Ground"))
         {
             Debug.Log("Hit Ground");
             CreateBulletEffect(objectWeHit);
-            Destroy(gameObject);
+            bulletPool.ReturnBulletToPool(gameObject);
         }
 
-        if (objectWeHit.gameObject.CompareTag("Enemy") && objectWeHit.gameObject.GetComponent<Enemy>().isDead == false)
+        if (objectWeHit.gameObject.CompareTag("Enemy"))
         {
-            objectWeHit.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
             CreateBloodEffect(objectWeHit);
-            Destroy(gameObject);
+            bulletPool.ReturnBulletToPool(gameObject);
+            if (objectWeHit.gameObject.GetComponent<Enemy>().isDead == false)
+            {
+                objectWeHit.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
+            }
+
         }
     }
 
